@@ -281,3 +281,33 @@ async function ejecutarDFS() {
     alert("No hay camino posible hacia la meta");
   }
 }
+
+//ALGORITMO DIJKSTRA
+async function ejecutarDijkstra() {
+  limpiarBusqueda(); // Limpiamos
+  let listaEspera = [];
+
+  nodoInicio.distacia = 0;
+  listaEspera.push(nodoInicio);
+
+  let movimientos = [
+    [0, -1], 
+    [0, 1], 
+    [-1, 0], 
+    [1, 0]
+  ];
+  let encontrado = false;
+
+  while (listaEspera.length > 0) {
+    await sleep(30);
+
+    listaEspera.sort((a, b) => a.distacia - b.distacia);
+    let actual = listaEspera.shift();
+    actual.esFrontera = false;
+
+    if (actual === nodoFin) {
+      encontrado = true;
+      break;
+    }
+  }
+}
