@@ -10,7 +10,7 @@ let nodoInicio, nodoFin;
 const COLOR_FONDO = [255, 228, 225]; // Salmón
 const COLOR_PARED = [52, 52, 52];    // Gris oscuro
 const COLOR_INICIO = [172, 99, 240]; // Morado
-const COLOR_FIN = [255, 0, 0];       // Rojo
+const COLOR_FIN = [72, 134, 247];       // AZUL
 
 
 function sleep(ms) {
@@ -134,6 +134,12 @@ function limpiarTablero() {
     for (let j = 0; j < filas; j++) {
       grid[i][j].esPared = false; // Limpia las paredes también
     }
+    for (let j = 0; j < filas; j++) {
+      grid[i][j].esInicio = false;
+    }
+    for (let j = 0; j < filas; j++) {
+      grid[i][j].esFin = false;
+    }
   }
 }
 
@@ -145,7 +151,12 @@ async function ejecutarBFS() {
   queue.push(nodoInicio);
   nodoInicio.visitado = true;
 
-  let movimientos = [ [0, -1], [0, 1], [-1, 0], [1, 0] ];
+  let movimientos = [ 
+    [0, -1], 
+    [0, 1], 
+    [-1, 0], 
+    [1, 0] 
+  ];
   let encontrado = false;
 
   while (queue.length > 0) {
@@ -209,7 +220,12 @@ async function ejecutarDFS() {
   nodoInicio.visitado = true;
 
  
-  let movimientos = [ [0, -1], [0, 1], [-1, 0], [1, 0] ];
+  let movimientos = [
+     [0, -1], 
+     [0, 1], 
+     [-1, 0], 
+     [1, 0]
+     ];
   let encontrado = false;
 
   while (stack.length > 0) {
