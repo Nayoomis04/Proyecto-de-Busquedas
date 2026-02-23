@@ -30,7 +30,12 @@ class Nodo {
     this.esFrontera = false; //(Abierto)
     this.esCamino = false;   //(Ruta final)
     this.padre = null;  
-    this.distacia = undefined; // Para Dijkstra     
+    this.distancia = Infinity; // Para Dijkstra   
+    // Para A*
+    this.f = Infinity; 
+    this.g = Infinity; 
+    this.h = 0;
+
   }
 
   mostrar() {
@@ -125,7 +130,8 @@ function limpiarBusqueda() {
       grid[i][j].esFrontera = false;
       grid[i][j].esCamino = false;
       grid[i][j].padre = null;
-      grid[i][j].distacia = undefined; // Para Dijkstra
+      grid[i][j].distacia = Infinity; // Para Dijkstra
+     
     }
   }
 }
@@ -312,20 +318,22 @@ async function ejecutarDijkstra() {
       break;
     }
 
+    //Revisar a los 4 vecinos
     for (let mov of movimientos) {
       let vecinoI = actual.i + mov[0];
       let vecinoJ = actual.j + mov[1];
 
       if (vecinoI >= 0 && vecinoI < columnas && vecinoJ >= 0 && vecinoJ < filas) {
         let vecino = grid[vecinoI][vecinoJ];
+
         if (!vecino.esPared) {
           let nuevaDistancia = actual.distacia + 1;
           if (vecino.distacia === undefined || nuevaDistancia < vecino.distacia) {
             vecino.distacia = nuevaDistancia;
-            vecino.padre = actual;
+            vecino.padre = actual; // Recordamos de dónde venimos
             if (!vecino.esFrontera) {
-              vecino.esFrontera = true;
-              listaEspera.push(vecino);
+              vecino.esFrontera = true; //Lo pintamos de verde
+              listaEspera.push(vecino); // Lo metemos a la lista de espera
             }
           }
         }
@@ -338,11 +346,14 @@ async function ejecutarDijkstra() {
   if (encontrado) {
     let actual = nodoFin.padre;
     let ruta = [];  
+
     while (actual !== nodoInicio && actual !== null) {
       ruta.push(actual);
       actual = actual.padre;
     }
+
     ruta.reverse();
+
     for (let nodoCamino of ruta) {
       await sleep(30);
       nodoCamino.esCamino = true;
