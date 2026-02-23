@@ -9,8 +9,8 @@ let nodoInicio, nodoFin;
 
 const COLOR_FONDO = [255, 228, 225]; // Salmón
 const COLOR_PARED = [52, 52, 52];    // Gris oscuro
-const COLOR_INICIO = [172, 99, 240]; // Morado
-const COLOR_FIN = [72, 134, 247];       // AZUL
+const COLOR_INICIO = [72, 134, 247];// Morado
+const COLOR_FIN = [172, 99, 240];        // AZUL
 
 
 function sleep(ms) {
@@ -46,11 +46,11 @@ class Nodo {
     } else if (this.esPared) {
       fill(COLOR_PARED);
     } else if (this.esCamino) {
-      fill(255, 255, 0); // Amarillo
+      fill(242, 239, 53); // Amarillo
     } else if (this.esFrontera) {
-      fill(0, 255, 0);   // Verde
+      fill(72, 247, 90);   // Verde
     } else if (this.visitado) {
-      fill(255, 0, 0);   // Rojo
+      fill(245, 39, 39);   // Rojo
     } else {
       fill(COLOR_FONDO); // Normal
     }
@@ -388,13 +388,7 @@ async function ejecutarAStar() {
     [0, -1], 
     [0, 1], 
     [-1, 0], 
-    [1, 0],
-
-    //En diagonal 
-    [-1, -1], 
-    [1, -1], 
-    [-1, 1], 
-    [1, 1]
+    [1, 0]
   ];
   let encontrado = false;
 

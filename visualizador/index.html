@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Visualizador p5.js</title>
+  <title> Visualizador de Algoritmos de Pathfinding </title>
   <script src="p5.min.js"></script>
   <script src="estilos.js"></script>
   <link rel="stylesheet" href="estilos.css">
@@ -13,14 +13,14 @@
   <div style="margin-bottom: 15px;">
 
     <label><strong>Selecciona: </strong></label>
-    <input type="radio" id="btnInicio" name="herramienta" value="inicio"> <label>Inicio</label>
+    <input type="radio" id="btnInicio" name="herramienta" value="inicio" checked> <label>Inicio</label>
     <input type="radio" id="btnFin" name="herramienta" value="fin"> <label>Fin</label>
-    <input type="radio" id="btnPared" name="herramienta" value="pared" checked> <label> Paredes</label>
+    <input type="radio" id="btnPared" name="herramienta" value="pared" > <label> Paredes</label>
     
   </div>
   
   <div>
-    <label><strong>Selecciona Un Algoritmo </strong></label>
+    <label><strong>Selecciona Un Algoritmo: </strong></label>
     <button class="boton" onclick="ejecutarBFS()">BFS</button>
     <button class="boton" onclick="ejecutarDFS()">DFS</button>
     <button class="boton" onclick="ejecutarDijkstra()">Dijkstra</button>
