@@ -4,17 +4,15 @@
   <meta charset="UTF-8">
   <title>Visualizador p5.js</title>
   <script src="p5.min.js"></script>
-  <style>
-    body { background-color: rgb(52, 52, 52); color: white; font-family: sans-serif; text-align: center; }
-    canvas { border: 2px solid white; margin-top: 10px; }
-  </style>
+  <script src="estilos.js"></script>
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
   <h2>Visualizador de Algoritmos</h2>
   
   <div style="margin-bottom: 15px;">
 
-    <label><strong>Seleccionar Algoritmo: </strong></label>
+    <label><strong>Selecciona: </strong></label>
     <input type="radio" id="btnInicio" name="herramienta" value="inicio"> <label>Inicio</label>
     <input type="radio" id="btnFin" name="herramienta" value="fin"> <label>Fin</label>
     <input type="radio" id="btnPared" name="herramienta" value="pared" checked> <label> Paredes</label>
@@ -22,9 +20,10 @@
   </div>
   
   <div>
-    <button onclick="ejecutarBFS()">BFS (Anchura)</button>
-    <button onclick="ejecutarDFS()">DFS (Profundidad)</button>
-    <button onclick="limpiarTablero()">Limpiar</button>
+    <label><strong>Selecciona Un Algoritmo </strong></label>
+    <button class="boton" onclick="ejecutarBFS()">BFS (Anchura)</button>
+    <button class="boton" onclick="ejecutarDFS()">DFS (Profundidad)</button>
+    <button class="boton" onclick="limpiarTablero()">Limpiar</button>
   </div>
 
   <script src="sketch.js"></script>

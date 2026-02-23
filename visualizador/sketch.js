@@ -56,7 +56,7 @@ class Nodo {
 
 
 function setup() {
-  createCanvas(500, 500); 
+  createCanvas(450, 450); 
   anchoCelda = width / columnas;
   altoCelda = height / filas;
 
