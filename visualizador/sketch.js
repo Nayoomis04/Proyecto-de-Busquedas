@@ -130,7 +130,11 @@ function limpiarBusqueda() {
       grid[i][j].esFrontera = false;
       grid[i][j].esCamino = false;
       grid[i][j].padre = null;
-      grid[i][j].distacia = Infinity; // Para Dijkstra
+      grid[i][j].distancia = Infinity; // Para Dijkstra
+      // Para A*
+      grid[i][j].f = Infinity;
+      grid[i][j].g = Infinity;
+      grid[i][j].h = 0;
      
     }
   }
@@ -295,7 +299,7 @@ async function ejecutarDijkstra() {
   limpiarBusqueda(); // Limpiamos
   let listaEspera = [];
 
-  nodoInicio.distacia = 0;
+  nodoInicio.distancia = 0;
   listaEspera.push(nodoInicio);
 
   let movimientos = [
@@ -309,7 +313,7 @@ async function ejecutarDijkstra() {
   while (listaEspera.length > 0) {
     await sleep(30);
 
-    listaEspera.sort((a, b) => a.distacia - b.distacia);
+    listaEspera.sort((a, b) => a.distancia - b.distancia);
     let actual = listaEspera.shift();
     actual.esFrontera = false;
 
@@ -317,6 +321,8 @@ async function ejecutarDijkstra() {
       encontrado = true;
       break;
     }
+
+    actual.visitado = true; //marcamos como visitado (cerrado)
 
     //Revisar a los 4 vecinos
     for (let mov of movimientos) {
@@ -327,9 +333,9 @@ async function ejecutarDijkstra() {
         let vecino = grid[vecinoI][vecinoJ];
 
         if (!vecino.esPared) {
-          let nuevaDistancia = actual.distacia + 1;
-          if (vecino.distacia === undefined || nuevaDistancia < vecino.distacia) {
-            vecino.distacia = nuevaDistancia;
+          let nuevaDistancia = actual.distancia + 1;
+          if (vecino.distancia === undefined || nuevaDistancia < vecino.distancia) {
+            vecino.distancia = nuevaDistancia;
             vecino.padre = actual; // Recordamos de dónde venimos
             if (!vecino.esFrontera) {
               vecino.esFrontera = true; //Lo pintamos de verde
@@ -362,3 +368,93 @@ async function ejecutarDijkstra() {
     alert("No hay camino posible hacia la meta");
   }
 }
+
+//HEURÍSTICA PARA A* 
+function heuristica(a, b) {
+  return dist(a.i, a.j, b.i, b.j);
+}
+
+//ALGORITMO A*
+async function ejecutarAStar() {
+  limpiarBusqueda(); // Limpiamos
+  let listaEspera = []; 
+
+  //Calculamos la heurística para el nodo inicio
+  nodoInicio.g = 0;
+  nodoInicio.f = heuristica(nodoInicio, nodoFin);
+  listaEspera.push(nodoInicio);
+
+  let movimientos = [
+    [0, -1], 
+    [0, 1], 
+    [-1, 0], 
+    [1, 0],
+
+    //En diagonal 
+    [-1, -1], 
+    [1, -1], 
+    [-1, 1], 
+    [1, 1]
+  ];
+  let encontrado = false;
+
+  while (listaEspera.length > 0) {
+    await sleep(30);
+
+    // Ordenamos por f = g + h
+    listaEspera.sort((a, b) => a.f - b.f);
+
+    let actual = listaEspera.shift();
+    actual.esFrontera = false;
+
+    if (actual === nodoFin) {
+      encontrado = true;
+      break;
+    }
+
+    actual.visitado = true; //marcamos como visitado (cerrado)
+
+    //Revisar a los 4 vecinos
+    for (let mov of movimientos) {
+      let vecinoI = actual.i + mov[0];
+      let vecinoJ = actual.j + mov[1];
+
+      if (vecinoI >= 0 && vecinoI < columnas && vecinoJ >= 0 && vecinoJ < filas) {
+        let vecino = grid[vecinoI][vecinoJ];
+
+        if (!vecino.esPared && !vecino.visitado) {
+          let nuevaG = actual.g + 1;
+
+          if (vecino.g === undefined || nuevaG < vecino.g) {
+            vecino.g = nuevaG;
+            vecino.h = heuristica(vecino, nodoFin);
+            vecino.f = vecino.g + vecino.h;
+            vecino.padre = actual; // Recordamos de dónde venimos
+            if (!listaEspera.includes(vecino)) {
+              vecino.esFrontera = true; //Lo pintamos de verde
+              listaEspera.push(vecino); // Lo metemos a la lista de espera
+            }
+          }
+        }
+      }
+    }
+  }
+  //Encontrado pintar de amarillo el camino
+  if (encontrado) {
+    let actual = nodoFin.padre;
+    let ruta = [];  
+    while (actual !== nodoInicio && actual !== null) {
+      ruta.push(actual);
+      actual = actual.padre;
+    }
+    ruta.reverse();
+    for (let nodoCamino of ruta) {
+      await sleep(30);
+      nodoCamino.esCamino = true;
+    }
+  } else {
+    alert("No hay camino posible hacia la meta");
+
+    }
+  }
+
