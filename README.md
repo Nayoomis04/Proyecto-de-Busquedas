@@ -1,13 +1,13 @@
 # Visualizador de Algoritmos de Pathfinding 
-Visualizador web interactivo que demuestra visualmente el funcionamiento o el como operan los algortimosde busqueda fundamentales en el campo de la IA 
+Visualizador web interactivo que demuestra visualmente el funcionamiento o el como operan los algortimos de busqueda fundamentales en el campo de la IA 
 
 **¿Como funciona este sistema?**
 
-Este sistema  esta elaborado bajo el paradigma Orientado A Objetos y este funciona atraves de un ciclo renderizado continuo, como por ejemplo:
+Este sistema  esta elaborado bajo el paradigma Orientado A Objetos y este funciona a traves de un ciclo renderizado continuo, como por ejemplo:
 
 1. **Grid** que este es el lienzo en donde se divide una matriz bidimensional donde cada celda es un objeto de la clase 'Nodo' y este guarda su propio estado de memoria.
 2. **Interaccion con el usuario**. Mediante eventos del DOM y de p5.js ('mousePressed', 'mouseDragged'), el usuario altera el estado de los nodos en tiempo real creando obstáculos (paredes) o moviendo las metas.
-3. **Ejecucion Asincrona** cuando se ejecuta dicho algoritmo, se utiliza JavaScript asíncrono ('async/await') junto con la ejecución por milisegundos ('sleep'), esto hace que haya una animacion del proceso de la toma de desiciones paso a paso, asi evitando que dicho algoritmo se recuelva instantaneamente.
+3. **Ejecucion Asincrona** cuando se ejecuta dicho algoritmo, se utiliza JavaScript asíncrono ('async/await') junto con la ejecución por milisegundos ('sleep'), esto hace que haya una animacion del proceso de la toma de desiciones paso a paso, asi evitando que dicho algoritmo se resuelva instantaneamente.
 4. **Colores de Estado:**
  *  **Verde:** Nodos en la frontera (Lista de espera / Abiertos).
  *  **Rojo:** Nodos ya evaluados (Visitados / Cerrados).
